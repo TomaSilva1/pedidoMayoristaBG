@@ -3,7 +3,7 @@ import { entrar, paginaLogin, registrarController } from "../controller/usuarios
 
 const router = Router();
 
-router.get("/login", paginaLogin);
+router.get("/", paginaLogin);
 router.post("/entrar", entrar);
 router.post("/registrar", registrarController);
 
