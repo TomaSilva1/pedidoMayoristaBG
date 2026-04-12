@@ -1,40 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/private.css">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/private.css">
+	<title>Clientes | ByGardenia</title>
 </head>
-<body>
-    
-    <header>
-        <h1>Lista de clientes</h1>
-        <a href="/menu">volver</a>
-    </header>
-    <main>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Telefono</th>
-                    <th>Dni</th>
-                    <th>Provincia</th>
-                    <th>Localidad</th>
-                    <th>Código postal</th>
-                    <th>Dirección</th>
-                    <th>Empresa de envio</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody id="table">
-                <!--JS-->
-            </tbody>
-        </table>
-    </main>
-    <footer></footer>
+<body class="bg-clientes-page">
 
-    <script src="./clientes.js"></script>
+	<header class="bg-clientes-topbar">
+		<div class="bg-clientes-topbar-inner">
+			<h1 class="bg-clientes-topbar-title">ByGardenia · Administración</h1>
+			<a href="/menu" class="bg-clientes-back">Volver al menú</a>
+		</div>
+	</header>
+
+	<main class="bg-clientes-main">
+		<section class="bg-clientes-card">
+			<div class="bg-clientes-head">
+				<div>
+					<p class="bg-clientes-eyebrow">Panel interno</p>
+					<h2 class="bg-clientes-title">Lista de clientes</h2>
+					<p class="bg-clientes-text">
+						Aquí puedes consultar clientes cargados y avanzar con la carga de pedidos.
+					</p>
+					<p>Buscador por nombre, apellido, dni o telefono</p>
+					<input type="text" id="buscador">
+				</div>
+			</div>
+
+			<div class="bg-clientes-table-wrap">
+				<table class="bg-clientes-table">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Teléfono</th>
+							<th>DNI</th>
+							<th>Provincia</th>
+							<th>Localidad</th>
+							<th>Código postal</th>
+							<th>Dirección</th>
+							<th>Empresa de envío</th>
+							<th>Opciones</th>
+						</tr>
+					</thead>
+					<tbody id="table">
+						<!-- JS -->
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+
+	<footer></footer>
+
+	<script src="./clientes.js"></script>
 </body>
 </html>

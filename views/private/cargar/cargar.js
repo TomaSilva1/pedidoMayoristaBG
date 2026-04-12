@@ -74,23 +74,10 @@ window.addEventListener("DOMContentLoaded", async () => {
             }, 1000);
         } catch (error) {
             console.log("ERROR AL ENVIA PEDIDO: "+error);
+            message.textContent = "Ocurrió un error al enviar el pedido.";
+			message.style.color = "#7a1f1f";
             return;
         }
-
-        /*try {
-            const res = await fetch("/venta/producto", {
-                method: "POST",
-                headers: {"Content-Type":"application/json"},
-                body: JSON.stringify(payload)
-            });
-
-            const respuesta =  await res.json();
-
-            form.reset();
-        } catch (error) {
-            console.error(error.message);
-            return;
-        }*/
     });
 
     agregarForm();
@@ -109,34 +96,41 @@ function agregarForm() {
     const hr = document.createElement("hr");
     const h5 = document.createElement("h5");
     h5.textContent = "Pedido";
-    h5.className = "text-center";
+    h5.className = "bg-cargar-pedido-title";
 
     const bloque = document.createElement("div");
-    bloque.className = "pedido border rounded p-3 mb-3";
+    bloque.className = "pedido bg-cargar-pedido";
     bloque.dataset.index = idx;
+
+    const pedidoHeader = document.createElement("div");
+	pedidoHeader.className = "bg-cargar-pedido-head";
 
     //Producto
     const divProd = document.createElement("div");
-    divProd.className = "mb-3";
+    divProd.className = "bg-cargar-field";
 
     const labelProd = document.createElement("label");
-    labelProd.className = "form-label";
-    labelProd.textContent = "Producto: "
+	labelProd.className = "bg-cargar-label";
+	labelProd.textContent = "Producto";
 
     const inputProd = document.createElement("input");
-    inputProd.type = "text";
-    inputProd.className = "producto form-control border-secondary shadow-sm";
-    inputProd.required = true;
+	inputProd.type = "text";
+	inputProd.className = "producto bg-cargar-input";
+	inputProd.required = true;
+	inputProd.placeholder = "Ej: Top deportivo negro talle M";
 
+	divProd.append(labelProd, inputProd);
 
     //new Cant
     const divNewCant = document.createElement("div");
-    
+    divNewCant.className = "bg-cargar-field";
+
     const labelCant = document.createElement("label");
-    labelCant.textContent = "Cantidad: ";
+	labelCant.className = "bg-cargar-label";
+	labelCant.textContent = "Cantidad";
 
     const selectCant = document.createElement("select");
-    selectCant.className = "cant";
+	selectCant.className = "cant bg-cargar-select";
 
     const option6 = document.createElement("option");
     const option12 = document.createElement("option");
@@ -145,6 +139,10 @@ function agregarForm() {
     const option48 = document.createElement("option");
     const option60 = document.createElement("option");
     const option72 = document.createElement("option");
+    const option84 = document.createElement("option");
+    const option96 = document.createElement("option");
+    const option108 = document.createElement("option");
+    const option120 = document.createElement("option");
 
     option6.textContent = "Media docena";
     option6.value = 6;
@@ -167,20 +165,30 @@ function agregarForm() {
     option72.textContent = "6 Docenas";
     option72.value = 72;
 
+    option84.textContent = "7 Docenas";
+    option84.value = 84;
 
-    selectCant.append(option6, option12, option24, option36, option48, option60, option72);
+    option96.textContent = "8 Docenas";
+    option96.value = 96;
+
+    option108.textContent = "9 Docenas";
+    option108.value = 108;
+
+    option120.textContent = "10 Docenas";
+    option120.value = 120;
+
+
+    selectCant.append(option6, option12, option24, option36, option48, option60, option72, option84, option96, option108, option120);
     divNewCant.append(labelCant, selectCant);
 
     //quitar
     const btnQuitar = document.createElement("button");
-    btnQuitar.type = "button";
-    btnQuitar.className = "btn btn-outline-danger btn-sm btn-quitar";
-    btnQuitar.textContent = "Quitar";
+	btnQuitar.type = "button";
+	btnQuitar.className = "bg-cargar-remove btn-quitar";
+	btnQuitar.textContent = "Quitar";
 
-    divProd.appendChild(labelProd);
-    divProd.appendChild(inputProd);
-
-    bloque.append(h5, divProd, divNewCant, btnQuitar,hr);
+    pedidoHeader.append(h5, btnQuitar);
+    bloque.append(pedidoHeader, divProd, divNewCant);
     virt.appendChild(bloque);
 
     idx++;

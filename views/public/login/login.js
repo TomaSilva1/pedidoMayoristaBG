@@ -4,8 +4,8 @@ window.addEventListener("DOMContentLoaded", () => {
     formLogin.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const user = formLogin.querySelector("#user").value;
-        const pass = formLogin.querySelector("#pass").value;
+        const user = formLogin.querySelector("#user").value.trim();
+        const pass = formLogin.querySelector("#pass").value.trim();
         const span = formLogin.querySelector("#message");
 
         const res = await fetch("/entrar", {
@@ -20,9 +20,12 @@ window.addEventListener("DOMContentLoaded", () => {
         const respuesta = await res.json();
 
         span.textContent = respuesta.message;
+        span.style.color = respuesta.login ? "#1f6b3b" : "#7a1f1f";
 
         if(respuesta.login){
-            window.location.href = "/menu";
+            setTimeout(() => {
+                window.location.href = "/menu";
+            }, 500);
         }
         
     });

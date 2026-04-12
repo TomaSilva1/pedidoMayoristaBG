@@ -48,9 +48,10 @@ function mandarForm(formCliente) {
         const text = await res.json();
         
         span.textContent = text.message;
+        span.style.color = text.reload ? "green" : "crimson";
 
-        if (text.reload) {
-            alert("REDIRIGIR?");
-        }
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000);
     });
 }

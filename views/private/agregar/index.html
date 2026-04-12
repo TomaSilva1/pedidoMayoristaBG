@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar pedido</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/private.css">
+	<title>Agregar pedido | ByGardenia</title>
 </head>
-<body>
-    <header>
-        <h1>Agregar pedidos</h1>
-        <a href="/pedidos">vovler</a>
-    </header>
-    <main>
-    <section class="min-vh-100 d-flex flex-column justify-content-center align-items-center">
-        <form id="formulario" class="p-4 rounded shadow-lg card shadow" style="min-width: 300px; max-width: 500px; width: 100%;">
-        <h2 class="text-center mb-4">Registro de Pedido</h2>
+<body class="bg-agregar-page">
 
-        <div class="mb-3">
-            <h4 id="info-cliente"></h4>
-            <span id="message"></span>
-        </div>
-        <div id="virtual">
-            <!--JS-->
-        </div>
-        <div class="mb-3 text-center">
-            <button type="button" id="agregar" class="btn shadow-sm" style="width: 40%;">➕ pedido</button>
-            <button type="submit" class="btn shadow-sm">Enviar</button>
-        </div>
-        </form>
-        <p id="mensaje"></p>
-        </section>
-    </main>
-    <footer>
-        
-    </footer>
+	<header class="bg-agregar-topbar">
+		<div class="bg-agregar-topbar-inner">
+			<h1 class="bg-agregar-topbar-title">ByGardenia · Administración</h1>
+			<a href="/pedidos" class="bg-agregar-back">Volver a pedidos</a>
+		</div>
+	</header>
 
-    <script src="./agregar.js"></script>
+	<main class="bg-agregar-main">
+		<section class="bg-agregar-card">
+			<div class="bg-agregar-head">
+				<p class="bg-agregar-eyebrow">Panel interno</p>
+				<h2 class="bg-agregar-title">Agregar productos al pedido</h2>
+				<p class="bg-agregar-text">
+					Añade uno o más productos a un pedido ya existente sin generar uno nuevo.
+				</p>
+			</div>
+
+			<form id="formulario" class="bg-agregar-form">
+				<div class="bg-agregar-info-box">
+					<h3 id="info-cliente" class="bg-agregar-info-cliente"></h3>
+					<span id="message" class="bg-agregar-message"></span>
+				</div>
+
+				<div id="virtual" class="bg-agregar-virtual">
+					<!-- JS -->
+				</div>
+
+				<div class="bg-agregar-actions">
+					<button type="button" id="agregar" class="bg-agregar-btn bg-agregar-btn-secondary">
+						+ Agregar producto
+					</button>
+					<button type="submit" class="bg-agregar-btn bg-agregar-btn-primary">
+						Guardar cambios
+					</button>
+				</div>
+			</form>
+
+			<p id="mensaje" class="bg-agregar-extra-message"></p>
+		</section>
+	</main>
+
+	<script src="./agregar.js"></script>
 </body>
 </html>

@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/private.css">
-    <title>Menu</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/private.css">
+	<title>Menú | ByGardenia</title>
 </head>
-<body>
-    <header>
-        <h1>Menu ByGardenia</h1>
-    </header>
-    <main>
-        <section>
-            <nav>
-                <ul>
-                    <li><a href="/venta/listaClientes">Clientes</a></li>
-                    <li><a href="/pedidos">Pedidos</a></li>
-                </ul>
-            </nav>
-        </section>
-    </main>
-    <footer>
+<body class="bg-admin-menu-page">
 
-    </footer>
+	<header class="bg-admin-menu-topbar">
+		<h1>ByGardenia · Administración</h1>
+	</header>
 
-    <script src="./menu.js"></script>
+	<main class="bg-admin-menu-main">
+		<section class="bg-admin-menu-card">
+			<div class="bg-admin-menu-head">
+				<p class="bg-admin-menu-eyebrow">Panel interno</p>
+				<h2 class="bg-admin-menu-title">Menú principal</h2>
+				<p class="bg-admin-menu-text">
+					Selecciona una sección para continuar dentro del sistema.
+				</p>
+			</div>
+
+			<nav class="bg-admin-menu-nav">
+				<ul class="bg-admin-menu-list">
+					<li class="bg-admin-menu-item">
+						<a href="/venta/listaClientes" class="bg-admin-menu-link">
+							<span class="bg-admin-menu-link-title">Clientes</span>
+							<span class="bg-admin-menu-link-desc">Ver y gestionar clientes cargados</span>
+						</a>
+					</li>
+					<li class="bg-admin-menu-item">
+						<a href="/pedidos" class="bg-admin-menu-link">
+							<span class="bg-admin-menu-link-title">Pedidos</span>
+							<span class="bg-admin-menu-link-desc">Consultar y trabajar pedidos</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</section>
+	</main>
+
 </body>
 </html>

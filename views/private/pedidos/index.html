@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/private.css">
-    <title>Pedidos</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/private.css">
+	<title>Pedidos | ByGardenia</title>
 </head>
-<body>
-    <header>
-        <h1>Pedidos</h1>
-        <a href="/menu">volver</a>
-    </header>
-    <main>
-        <section id="list-pedidos">
-            <!--Pedidos-->
-        </section>
-    </main>
-    <footer></footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="./pedidos.js"></script>
+<body class="bg-pedidos-page">
+
+	<header class="bg-pedidos-topbar">
+		<div class="bg-pedidos-topbar-inner">
+			<h1 class="bg-pedidos-topbar-title">ByGardenia · Administración</h1>
+			<a href="/menu" class="bg-pedidos-back">Volver al menú</a>
+		</div>
+	</header>
+
+	<main class="bg-pedidos-main">
+		<section class="bg-pedidos-shell">
+			<div class="bg-pedidos-head">
+				<p class="bg-pedidos-eyebrow">Panel interno</p>
+				<h2 class="bg-pedidos-title">Pedidos</h2>
+				<p class="bg-pedidos-text">
+					Consulta pedidos pendientes, cambia su estado, agrega productos o genera el PDF de armado.
+				</p>
+			</div>
+
+			<section id="list-pedidos" class="bg-pedidos-grid">
+				<!-- Pedidos -->
+			</section>
+		</section>
+	</main>
+
+	<footer></footer>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script src="./pedidos.js"></script>
 </body>
 </html>
