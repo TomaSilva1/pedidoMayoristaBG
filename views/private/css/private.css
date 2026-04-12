@@ -1,0 +1,8 @@
+.pedido-art{
+    display: flex;
+    flex-direction: column;
+    border: 0.1em black solid;
+    width: 20em;
+    padding: 1em;
+    text-align: center;
+}

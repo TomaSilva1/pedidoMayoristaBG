@@ -1,0 +1,244 @@
+const { jsPDF } = window.jspdf;
+
+window.addEventListener("DOMContentLoaded", async () => {
+    const sectionPedidos = document.getElementById("list-pedidos");
+
+    await renderPendientes(sectionPedidos);
+});
+
+async function renderPendientes(sectionPedidos){
+    const respuesta = await fetch("/listPendientes");
+    const pedidos = await respuesta.json();
+
+    let cliente = {
+        "idcliente": pedidos[0].idcliente,
+        "id_pedido": pedidos[0].id_pedido,
+        "nombre": pedidos[0].nombre,
+        "apellido": pedidos[0].apellido,
+        "estado": pedidos[0].finalizado,
+        "pedidos": []
+    };
+
+    let objeto = [];
+
+    objeto.push(cliente);
+    objeto[0].pedidos.push(pedidos[0]);
+
+    let x = 0;
+    for (let i = 1; i < pedidos.length; i++) {
+        if (pedidos[i].idcliente == objeto[x].idcliente && pedidos[i].id_pedido == objeto[x].id_pedido) {
+            objeto[x].pedidos.push(pedidos[i]);
+        }else{
+            cliente = {
+                "idcliente": pedidos[i].idcliente,
+                "id_pedido": pedidos[i].id_pedido,
+                "nombre": pedidos[i].nombre,
+                "apellido": pedidos[i].apellido,
+                "estado": pedidos[i].finalizado,
+                "pedidos": []
+            }
+            objeto.push(cliente);
+            x++;
+            objeto[x].pedidos.push(pedidos[i]);
+        }
+    }
+
+    sectionPedidos.innerHtml = "";
+
+    for (const ped of objeto) {
+        const article = document.createElement("article");
+        article.className = "pedido-art";
+
+        const h4 = document.createElement("h4");
+        h4.textContent = `Cliente: ${ped.nombre}, ${ped.apellido}`;
+
+        const nroPed = document.createElement("span");
+        nroPed.textContent = `Pedido nro: ${ped.id_pedido}`;
+
+        const br = document.createElement("br");
+
+        article.append(h4, nroPed, br);
+
+        for (const detalle of ped.pedidos) {
+
+            const producto = document.createElement("span");
+            producto.textContent = `Producto: ${detalle.producto}`;
+
+            let cant = "";
+
+            switch (detalle.cantidad) {
+                case 6:
+                    cant = "Media Docena";
+                    break;
+            
+                case 12:
+                    cant = "1 Docena";
+                    break;
+
+                case 24:
+                    cant = "2 Docenas";
+                    break;
+                    
+                case 36:
+                    cant = "3 Docenas";
+                    break;
+
+                case 48:
+                    cant = "4 Docenas";
+                    break;
+
+                case 60:
+                    cant = "5 Docenas";
+                    break;
+
+                case 72:
+                    cant = "6 Docenas";
+                    break;
+                default:
+                    break;
+            }
+
+            const cantidad = document.createElement("span");
+            cantidad.textContent = `Cantidad: ${cant}`;
+
+            const br2 = document.createElement("br");
+
+            article.append(producto, cantidad, br2);
+        }
+
+        const estado = document.createElement("span");
+        estado.textContent = `Estado: ${ped.estado}`;
+
+        const select = document.createElement("select");
+            
+        const option1 = document.createElement("option");
+        option1.textContent = "Cambiar estado";
+        option1.disabled = true;
+        option1.selected = true;
+
+        const option2 = document.createElement("option");
+        option2.textContent = "Pendiente";
+
+        const option3 = document.createElement("option");
+        option3.textContent = "Despachado";
+        option3.value = "despachado";
+
+        const option4 = document.createElement("option");
+        option4.textContent = "Cancelado";
+        option4.value = "cancelado"
+
+        select.addEventListener("change", async (e) => {
+            try {
+                await fetch("/cambiarEstado", {
+                    method: "PUT",
+                    headers: {"Content-Type":"application/json"},
+                    body: JSON.stringify({
+                        "id":ped.id_pedido,
+                        "nuevoEstado":e.target.value
+                    })
+                });
+
+                window.location.reload();
+            } catch (error) {
+                console.log("Error al enviar cambio de estado: "+error);
+                return;
+            }
+        });
+
+        const agregar = document.createElement("button");
+        agregar.textContent = "+ agregar";
+        agregar.addEventListener("click", () => {
+            window.location.href = `/agregar/${ped.id_pedido}`;
+        });
+
+        const pdf = document.createElement("button");
+        pdf.textContent = "Crear pdf";
+        pdf.addEventListener("click", () => {
+            crearPDF(ped);
+        });
+
+        select.append(option1, option3, option4);
+        article.append(estado, select, agregar, pdf);
+        sectionPedidos.append(article);
+    }
+}
+
+async function crearPDF(pedido){
+    const doc = new jsPDF();
+
+    const respuesta = await fetch(`/venta/traerCliente/${pedido.idcliente}`);
+    const cliente = await respuesta.json();
+
+    doc.setFontSize(16);
+    doc.text("Detalle del pedido", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Fecha:__/__/____`, 20, 40);
+    doc.text(`Nro Pedido: ${pedido.id_pedido}`, 20, 50);
+    doc.text("________________________________________________", 20, 60);
+    doc.text(`Cliente`, 20, 75);
+    doc.text(`Nombre: ${cliente.nombre}, ${cliente.apellido}`, 20, 85);
+    doc.text(`Telefono: ${cliente.telefono}`, 20, 95);
+    doc.text("________________________________________________", 20, 105);
+    doc.text(`Envio`, 20, 120);
+    doc.text(`${cliente.empresa}`, 20, 130);
+    doc.text(`Sucursarl / direccion`, 20, 140);
+    doc.text(`${cliente.direccion || "Sin asignar"}`, 20, 145);
+    doc.text(`Provincia: ${cliente.provincia}`,20, 155);
+    doc.text(`Codigo postal: ${cliente.codigop}`, 20, 165);
+    doc.text(`DNI: ${cliente.dni || "Sin asignar"}`, 20, 175);
+    doc.text("________________________________________________", 20, 185);
+    doc.text(`Pedido`, 20, 195);
+    let y = 205;
+    let i = 1;
+    for (const ped of pedido.pedidos) {
+        if(y > 280){
+            doc.addPage();
+            y = 20;
+            doc.text(`pedido nro: ${pedido.id_pedido}`, 20, y);
+            y += 10;
+        }
+        doc.text(`${i} - Producto: ${ped.producto}, Cantidad: ${ped.cantidad}`, 20, y);
+        y += 10;
+        i++;
+    }
+    doc.text(`TOTAL DE PEDIDOS: ${i-1}`, 20, y+5);
+    doc.addPage();
+    y=20;
+    doc.setFontSize(18);
+    doc.text(`! CONTROL DE ARMADO ! (pedido nro: ${pedido.id_pedido})`, 20, y);
+
+    y += 15;
+    doc.setFontSize(16);
+    doc.text(`[_] Armé cada producto por separado`, 20, y);
+    y += 10;
+    doc.text(`[_] Conté cada bloque (12 / 6)`, 20, y);
+    y += 10;
+    doc.text(`[_] No mesclé productos`, 20, y);
+    y += 10;
+    doc.text(`[_] Coincide con el pedido`, 20, y);
+    y += 15;
+    doc.text(`! CONTROL FINAL (ANTES DE CERRAR) !`, 20, y);
+    y += 15;
+    doc.text(`[_] Reconté todo`, 20, y);
+    y += 10;
+    doc.text(`[_] Total final correcto`, 20, y);
+    y += 10;
+    doc.text(`[_] Nada faltante`, 20, y);
+    y += 15;
+    doc.text(`FINAL`, 20, y);
+    y += 15;
+    doc.text(`[_] Foto del pedido antes de cerrar`, 20, y);
+    y += 10;
+    doc.text(`[_] Bolsa cerrada correctamente`, 20, y);
+    y += 10;
+    doc.text(`[_] Etiqueta correcta pegada`, 20, y);
+    y += 10;
+    doc.text(`[_] Datos de envío verificados`, 20, y);
+    y += 30;
+    doc.text(`Armado por: _____________`, 20, y);
+    y += 12;
+    doc.text(`Control final: ______________`, 20, y);
+
+    doc.save(`pedido-${pedido.id_pedido}.pdf`);
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar pedido</title>
+</head>
+<body>
+    <header>
+        <h1>Agregar pedidos</h1>
+        <a href="/pedidos">vovler</a>
+    </header>
+    <main>
+    <section class="min-vh-100 d-flex flex-column justify-content-center align-items-center">
+        <form id="formulario" class="p-4 rounded shadow-lg card shadow" style="min-width: 300px; max-width: 500px; width: 100%;">
+        <h2 class="text-center mb-4">Registro de Pedido</h2>
+
+        <div class="mb-3">
+            <h4 id="info-cliente"></h4>
+            <span id="message"></span>
+        </div>
+        <div id="virtual">
+            <!--JS-->
+        </div>
+        <div class="mb-3 text-center">
+            <button type="button" id="agregar" class="btn shadow-sm" style="width: 40%;">➕ pedido</button>
+            <button type="submit" class="btn shadow-sm">Enviar</button>
+        </div>
+        </form>
+        <p id="mensaje"></p>
+        </section>
+    </main>
+    <footer>
+        
+    </footer>
+
+    <script src="./agregar.js"></script>
+</body>
+</html>
