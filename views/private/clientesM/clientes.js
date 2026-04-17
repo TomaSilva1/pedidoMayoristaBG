@@ -1,9 +1,17 @@
 window.addEventListener("DOMContentLoaded", () => {
 
+	/* ========BUSCADOR======== */
 	const buscador = document.getElementById("buscador");
-	buscador.addEventListener("input", (e) => {
-		renderizarTabla(e.target.value);
+	const btn_buscar = document.getElementById("btn-buscador");
+	btn_buscar.addEventListener("click", () => {
+		renderizarTabla(buscador.value);
 	});	
+	buscador.addEventListener("input", (e) => {
+		if (e.target.value == "") {
+			renderizarTabla();
+		}
+	});
+	/* ========FIN=BUSCADOR======== */
 
     renderizarTabla();
 });
@@ -11,6 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
 async function renderizarTabla(filtro = ""){
     const table = document.getElementById("table");
     table.innerHTML = "";
+	table.innerHTML = "";
 
     let clientes = await traerClientes();
 

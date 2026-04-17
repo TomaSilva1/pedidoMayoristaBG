@@ -37,7 +37,7 @@ function mandarForm(formCliente) {
             "idEmpresa": idEmpresa
         }
 
-        console.log(objeto);
+        //console.log(objeto);
 
         const res = await fetch("/venta/guardar", {
             method: "POST",
@@ -51,7 +51,7 @@ function mandarForm(formCliente) {
         span.style.color = text.reload ? "green" : "crimson";
 
         setTimeout(() => {
-            window.location.reload();
-        }, 5000);
+            window.location.href="../gracias/index.html";
+        }, 200);
     });
 }

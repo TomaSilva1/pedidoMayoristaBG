@@ -33,7 +33,7 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-//sirvo los archivos estaticos
+//sirvo los archivos estaticos publicos para todos.
 app.use(express.static("views/public"));
 
 //manejo de apis
@@ -42,6 +42,6 @@ app.use("/venta", cliente);
 app.use("/", menu);
 app.use("/", pedidos);
 
-app.listen(PORT, () => {
+app.listen(3000, () => {
     console.log("App corriendo en puerto: "+PORT);
 });
