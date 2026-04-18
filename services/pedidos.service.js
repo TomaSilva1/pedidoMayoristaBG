@@ -14,7 +14,9 @@ export async function guardarPedido(id, payload){
         //console.log(idPedido.rows[0].id_pedido);
 
         for (const compra of payload) {
-            await client.query("INSERT INTO detalle_pedido (producto, cantidad, id_pedido, precio) VALUES ($1, $2, $3, $4)", [compra.producto, compra.cant, idPedido.rows[0].id_pedido, compra.precio]);
+            const precio = calcularPrecio(compra.cant, compra.precio);
+
+            await client.query("INSERT INTO detalle_pedido (producto, cantidad, id_pedido, precio) VALUES ($1, $2, $3, $4)", [compra.producto, compra.cant, idPedido.rows[0].id_pedido, precio]);
         }
 
         await client.query("COMMIT");
@@ -62,7 +64,8 @@ export async function agregarPedidoId(id, payload){
     try {
 
         for (const compra of payload) {
-            await client.query("INSERT INTO detalle_pedido (producto, cantidad, id_pedido, precio) VALUES ($1, $2, $3, $4)", [compra.producto, compra.cant, id, compra.precio]);
+            const precio = calcularPrecio(compra.cant, compra.precio);
+            await client.query("INSERT INTO detalle_pedido (producto, cantidad, id_pedido, precio) VALUES ($1, $2, $3, $4)", [compra.producto, compra.cant, id, precio]);
         }
 
         await client.query("COMMIT");
@@ -87,3 +90,18 @@ export async function cambiarEstado(id, estado){
         return;
     }
 };
+
+function calcularPrecio(cant, precio){
+	if(cant == 6){
+		precio = precio/2 + 5000;
+	}
+
+	if(cant > 12){
+		cant = cant / 12;
+		precio = precio*cant;
+	}else{
+		return precio;
+	}
+
+	return precio;
+}
