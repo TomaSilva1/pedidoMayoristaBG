@@ -166,7 +166,7 @@ function agregarForm() {
     const inputPrecio = document.createElement("input");
 	inputPrecio.type = "number";
 	inputPrecio.className = "precio bg-cargar-input";
-	inputPrecio.placeholder = "Valor de lo que se carga.";
+	inputPrecio.placeholder = "Valor de la docena.";
 
 	divPrecio.append(labelPrecio, inputPrecio);
 
