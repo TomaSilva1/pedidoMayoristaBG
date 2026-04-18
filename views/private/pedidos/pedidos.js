@@ -172,7 +172,7 @@ async function renderPendientes(sectionPedidos) {
 					})
 				});
 
-				window.location.reload();
+				renderPendientes(sectionPedidos);
 			} catch (error) {
 				console.log("Error al enviar cambio de estado: " + error);
 				return;
@@ -228,24 +228,28 @@ async function crearPDF(pedido) {
 	doc.text(`Sucursarl / direccion`, 20, 140);
 	doc.text(`${cliente.direccion || "Sin asignar"}`, 20, 145);
 	doc.text(`Provincia: ${cliente.provincia}`, 20, 155);
-	doc.text(`Codigo postal: ${cliente.codigop}`, 20, 165);
-	doc.text(`DNI: ${cliente.dni || "Sin asignar"}`, 20, 175);
-	doc.text("________________________________________________", 20, 185);
-	doc.text(`Pedido`, 20, 195);
-	let y = 205;
-	let i = 1;
+	doc.text(`Localidad: ${cliente.localidad}`, 20, 165);
+	doc.text(`Codigo postal: ${cliente.codigop}`, 20, 175);
+	doc.text(`DNI: ${cliente.dni || "Sin asignar"}`, 20, 185);
+	doc.text("________________________________________________", 20, 195);
+	doc.text(`Pedido`, 20, 205);
+
+	let i = 1, total = 0, y = 215;
 	for (const ped of pedido.pedidos) {
+		if(ped.precio != null) total += parseFloat(ped.precio);
+			else ped.precio = "Sin cargar";
 		if (y > 280) {
 			doc.addPage();
 			y = 20;
 			doc.text(`pedido nro: ${pedido.id_pedido}`, 20, y);
 			y += 10;
 		}
-		doc.text(`${i} - Producto: ${ped.producto}, Cantidad: ${ped.cantidad}`, 20, y);
+		doc.text(`${i} - Producto: ${ped.producto} | Precio: $${ped.precio} | Cantidad: ${ped.cantidad}`, 20, y);
 		y += 10;
 		i++;
 	}
-	doc.text(`TOTAL DE PEDIDOS: ${i - 1}`, 20, y + 5);
+	doc.text(`PEDIDOS: ${i - 1}`, 20, y + 5);
+	doc.text(`TOTAL: $${total}`, 20, y + 10);
 	doc.addPage();
 	y = 20;
 	doc.setFontSize(18);

@@ -14,7 +14,7 @@ export async function guardarPedido(id, payload){
         //console.log(idPedido.rows[0].id_pedido);
 
         for (const compra of payload) {
-            await client.query("INSERT INTO detalle_pedido (producto, cantidad, id_pedido) VALUES ($1, $2, $3)", [compra.producto, compra.cant, idPedido.rows[0].id_pedido]);
+            await client.query("INSERT INTO detalle_pedido (producto, cantidad, id_pedido, precio) VALUES ($1, $2, $3, $4)", [compra.producto, compra.cant, idPedido.rows[0].id_pedido, compra.precio]);
         }
 
         await client.query("COMMIT");
@@ -62,7 +62,7 @@ export async function agregarPedidoId(id, payload){
     try {
 
         for (const compra of payload) {
-            await client.query("INSERT INTO detalle_pedido (producto, cantidad, id_pedido) VALUES ($1, $2, $3)", [compra.producto, compra.cant, id]);
+            await client.query("INSERT INTO detalle_pedido (producto, cantidad, id_pedido, precio) VALUES ($1, $2, $3, $4)", [compra.producto, compra.cant, id, compra.precio]);
         }
 
         await client.query("COMMIT");

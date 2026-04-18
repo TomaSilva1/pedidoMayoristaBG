@@ -47,8 +47,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 		bloques.forEach((bloque) => {
 			const producto = bloque.querySelector(".producto").value.trim();
 			const cant = bloque.querySelector(".cant").value;
+			const precio = bloque.querySelector(".precio").value;
 
-			pedido.push({ producto, cant });
+			pedido.push({ producto, precio, cant});
 		});
 
 		try {
@@ -154,7 +155,22 @@ function agregarForm() {
 
 	divCant.append(labelCant, selectCant);
 
-	bloque.append(pedidoHeader, divProd, divCant);
+	//precio
+    const divPrecio = document.createElement("div");
+    divPrecio.className = "bg-cargar-field";
+
+    const labelPrecio = document.createElement("label");
+	labelPrecio.className = "bg-cargar-label";
+	labelPrecio.textContent = "Precio";
+
+    const inputPrecio = document.createElement("input");
+	inputPrecio.type = "number";
+	inputPrecio.className = "precio bg-cargar-input";
+	inputPrecio.placeholder = "Valor de lo que se carga.";
+
+	divPrecio.append(labelPrecio, inputPrecio);
+
+	bloque.append(pedidoHeader, divProd, divPrecio, divCant);
 	virt.appendChild(bloque);
 
 	idx++;
